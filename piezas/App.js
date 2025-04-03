@@ -16,6 +16,8 @@ function HomeScreen({ navigation }) {
     setPieces(pieces.filter(piece => piece.id !== id));
   };
 
+  const sortedPieces = [...pieces].sort((a, b) => new Date(a.date) - new Date(b.date));
+
   return (
     <SafeAreaView style={{ flex: 1, padding: 20 }}>
       <Button title="Agregar Pieza" onPress={() => navigation.navigate('Agregar Pieza', { setPieces })} />
@@ -23,7 +25,7 @@ function HomeScreen({ navigation }) {
         <Text style={{ textAlign: 'center', marginTop: 40 }}>No hay piezas, Agregue una</Text>
       ) : (
         <FlatList
-          data={pieces}
+          data={sortedPieces}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <PieceItem piece={item} onDelete={deletePiece} onSelect={setSelectedPiece} />
